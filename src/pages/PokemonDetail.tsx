@@ -356,18 +356,21 @@ export const PokemonDetail: React.FC = () => {
         <Grid container item xs={8}>
           <Grid container item xs={12} justify="flex-end">
             <Button
+              variant="contained"
               onClick={() => {
                 setLocale!(Locales.KOREAN);
               }}>
               한
             </Button>
             <Button
+              variant="contained"
               onClick={() => {
                 setLocale!(Locales.JAPANESE);
               }}>
               日
             </Button>
             <Button
+              variant="contained"
               onClick={() => {
                 setLocale!(Locales.ENGLISH);
               }}>
