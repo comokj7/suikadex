@@ -12,7 +12,7 @@ export const filterLocaleName = (
   isAlt?: boolean
 ): any[] => {
   const targetLocale =
-    isAlt && Locales.JAPANESE ? Locales.JAPANESE_KANA : locale;
+    isAlt && locale === Locales.JAPANESE ? Locales.JAPANESE_KANA : locale;
 
   return list?.filter((item) => item.language_id === targetLocale) ?? [];
 };
