@@ -31,6 +31,10 @@ const StyledContainer = styled(Container)`
   overflow: hidden;
 `;
 
+const FilterGrid = styled(Grid)`
+  margin-bottom: 20px;
+`;
+
 const StyledSearchBar = styled(SearchBar)`
   height: 100%;
 `;
@@ -137,7 +141,7 @@ export const PokemonList: React.FC = () => {
 
   return (
     <StyledContainer>
-      <Grid container direction="row">
+      <FilterGrid container direction="row">
         <StyledSearchBar
           value={keyword}
           placeholder="전국도감 번호 or 이름"
@@ -179,7 +183,7 @@ export const PokemonList: React.FC = () => {
             ))}
           </Select>
         </SelectFormControl>
-      </Grid>
+      </FilterGrid>
       <StyledList>
         {pokemons?.map((pokemon) => {
           const names =
