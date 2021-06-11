@@ -1,0 +1,237 @@
+query GetPokemon($no: Int, $locales: [Int!]) {
+  pokemon_v2_pokemon(where: { id: { _eq: $no } }) {
+    id
+    height
+    weight
+    pokemon_v2_pokemonspecy {
+      id
+      has_gender_differences
+      gender_rate
+      pokemon_v2_pokemonspeciesnames(
+        where: { language_id: { _in: $locales } }
+      ) {
+        id
+        genus
+        language_id
+        name
+      }
+      pokemon_v2_pokemonspeciesflavortexts(
+        where: { language_id: { _in: $locales } }
+      ) {
+        id
+        flavor_text
+        language_id
+        pokemon_v2_version {
+          id
+          name
+        }
+      }
+      pokemon_v2_evolutionchain {
+        id
+        pokemon_v2_pokemonspecies(order_by: { id: asc }) {
+          id
+          evolves_from_species_id
+          pokemon_v2_pokemonspeciesnames(
+            where: { language_id: { _in: $locales } }
+          ) {
+            id
+            language_id
+            name
+          }
+          pokemon_v2_pokemonevolutions {
+            id
+            min_affection
+            min_beauty
+            min_happiness
+            min_level
+            time_of_day
+            relative_physical_stats
+            turn_upside_down
+            needs_overworld_rain
+            pokemon_v2_item {
+              id
+              pokemon_v2_itemnames(where: { language_id: { _in: $locales } }) {
+                id
+                language_id
+                name
+              }
+            }
+            pokemon_v2_location {
+              id
+              pokemon_v2_locationnames(
+                where: { language_id: { _in: $locales } }
+              ) {
+                id
+                language_id
+                name
+              }
+              pokemon_v2_region {
+                id
+                pokemon_v2_regionnames(
+                  where: { language_id: { _in: $locales } }
+                ) {
+                  id
+                  language_id
+                  name
+                }
+              }
+            }
+            pokemon_v2_gender {
+              id
+              name
+            }
+            pokemon_v2_evolutiontrigger {
+              id
+              name
+            }
+            pokemonV2PokemonspecyByPartySpeciesId {
+              id
+              pokemon_v2_pokemonspeciesnames(
+                where: { language_id: { _in: $locales } }
+              ) {
+                id
+                language_id
+                name
+              }
+            }
+            pokemonV2PokemonspecyByTradeSpeciesId {
+              id
+              pokemon_v2_pokemonspeciesnames(
+                where: { language_id: { _in: $locales } }
+              ) {
+                id
+                language_id
+                name
+              }
+            }
+            pokemonV2ItemByHeldItemId {
+              id
+              pokemon_v2_itemnames(where: { language_id: { _in: $locales } }) {
+                id
+                language_id
+                name
+              }
+            }
+            pokemon_v2_move {
+              id
+              pokemon_v2_movenames(where: { language_id: { _in: $locales } }) {
+                id
+                language_id
+                name
+              }
+              pokemon_v2_type {
+                id
+                pokemon_v2_typenames(
+                  where: { language_id: { _in: $locales } }
+                ) {
+                  id
+                  language_id
+                  name
+                }
+              }
+            }
+            pokemonV2TypeByPartyTypeId {
+              id
+              pokemon_v2_typenames(where: { language_id: { _in: $locales } }) {
+                id
+                language_id
+                name
+              }
+            }
+            pokemon_v2_type {
+              id
+              pokemon_v2_typenames(where: { language_id: { _in: $locales } }) {
+                id
+                language_id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+    pokemon_v2_pokemontypes(order_by: { id: asc }) {
+      id
+      pokemon_v2_type {
+        id
+        pokemon_v2_typenames(where: { language_id: { _in: $locales } }) {
+          id
+          name
+          language_id
+        }
+        pokemonV2TypeefficaciesByTargetTypeId(
+          order_by: { target_type_id: asc }
+        ) {
+          id
+          damage_factor
+          pokemon_v2_type {
+            id
+            pokemon_v2_typenames(where: { language_id: { _in: $locales } }) {
+              id
+              name
+              language_id
+            }
+          }
+        }
+      }
+    }
+    pokemon_v2_pokemonmoves(order_by: { level: asc }) {
+      id
+      level
+      pokemon_v2_move {
+        id
+        accuracy
+        pp
+        priority
+        power
+        pokemon_v2_movenames(where: { language_id: { _in: $locales } }) {
+          id
+          name
+          language_id
+        }
+        pokemon_v2_movedamageclass {
+          id
+          name
+        }
+        pokemon_v2_movemeta {
+          id
+          ailment_chance
+          crit_rate
+          drain
+          flinch_chance
+          healing
+          max_hits
+          max_turns
+          min_hits
+          min_turns
+          stat_chance
+          pokemon_v2_movemetaailment {
+            id
+            name
+          }
+          pokemon_v2_movemetacategory {
+            id
+            name
+          }
+        }
+      }
+    }
+    pokemon_v2_pokemonabilities {
+      id
+      pokemon_v2_ability {
+        pokemon_v2_abilitynames(where: { language_id: { _in: $locales } }) {
+          id
+          name
+          language_id
+        }
+        pokemon_v2_abilityflavortexts(
+          where: { language_id: { _in: $locales } }
+        ) {
+          id
+          flavor_text
+          language_id
+        }
+      }
+    }
+  }
+}

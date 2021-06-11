@@ -1,0 +1,17 @@
+schema: https://beta.pokeapi.co/graphql/v1beta
+overwrite: true
+
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+generates:
+  src/graphql/generated/schemas.tsx:
+    documents: 'src/graphql/**/**.graphql'
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHOC: false
+      withComponent: false
+      withHooks: true
