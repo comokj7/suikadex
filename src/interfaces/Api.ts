@@ -263,6 +263,44 @@ export type ApiAbilityName = { __typename?: 'pokemon_v2_abilityname' } & Pick<
   'id' | 'name' | 'language_id'
 >;
 
+export type ApiPokemonListItem = { __typename?: 'pokemon_v2_pokemon' } & Pick<
+  Pokemon_V2_Pokemon,
+  'id'
+> & {
+    pokemon_v2_pokemonsprites: Array<
+      { __typename?: 'pokemon_v2_pokemonsprites' } & Pick<
+        Pokemon_V2_Pokemonsprites,
+        'id' | 'sprites'
+      >
+    >;
+    pokemon_v2_pokemonspecy?: Maybe<
+      { __typename?: 'pokemon_v2_pokemonspecies' } & Pick<
+        Pokemon_V2_Pokemonspecies,
+        'id'
+      > & {
+          pokemon_v2_pokemonspeciesnames: Array<
+            { __typename?: 'pokemon_v2_pokemonspeciesname' } & Pick<
+              Pokemon_V2_Pokemonspeciesname,
+              'id' | 'language_id' | 'name'
+            >
+          >;
+        }
+    >;
+    pokemon_v2_pokemontypes: Array<
+      { __typename?: 'pokemon_v2_pokemontype' } & Pick<
+        Pokemon_V2_Pokemontype,
+        'id'
+      > & {
+          pokemon_v2_type?: Maybe<
+            { __typename?: 'pokemon_v2_type' } & Pick<
+              Pokemon_V2_Type,
+              'id' | 'name'
+            >
+          >;
+        }
+    >;
+  };
+
 export type ApiPokemon = { __typename?: 'pokemon_v2_pokemon' } & Pick<
   Pokemon_V2_Pokemon,
   'id' | 'height' | 'weight'

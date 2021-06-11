@@ -1,5 +1,8 @@
 query GetPokemons($locales: [Int!]) {
-  pokemon_v2_pokemon(order_by: { id: asc }) {
+  pokemon_v2_pokemon(
+    order_by: { id: asc }
+    where: { is_default: { _eq: true } }
+  ) {
     id
     pokemon_v2_pokemonsprites {
       id
