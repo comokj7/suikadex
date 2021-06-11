@@ -1,0 +1,2 @@
+# suikadex
+Pokedex for private
