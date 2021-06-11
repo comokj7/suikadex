@@ -50885,6 +50885,16 @@ export type GetPokemonQuery = { __typename?: 'query_root' } & {
         >;
       }
   >;
+  pokemon_v2_pokemon_aggregate: {
+    __typename?: 'pokemon_v2_pokemon_aggregate';
+  } & {
+    aggregate?: Maybe<
+      { __typename?: 'pokemon_v2_pokemon_aggregate_fields' } & Pick<
+        Pokemon_V2_Pokemon_Aggregate_Fields,
+        'count'
+      >
+    >;
+  };
 };
 
 export type GetPokemonsQueryVariables = Exact<{
@@ -51181,6 +51191,11 @@ export const GetPokemonDocument = gql`
             language_id
           }
         }
+      }
+    }
+    pokemon_v2_pokemon_aggregate(where: { is_default: { _eq: true } }) {
+      aggregate {
+        count(distinct: true, columns: id)
       }
     }
   }

@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   Paper,
   Tab,
   Tabs,
@@ -39,6 +40,8 @@ import {
 } from '../components/organisms';
 import { useLocale } from '../providers/LocaleProvider';
 import { ApiEvolution } from '../interfaces';
+import random from 'random';
+import { ChevronLeft } from 'mdi-material-ui';
 
 type PageParameter = {
   no: string;
@@ -89,8 +92,22 @@ export const PokemonDetail: React.FC = () => {
     setTab(newTab);
   };
 
-  const handleMoveTo = (id?: number) => {
-    history.push(`/pokemon/${id}`);
+  const goToList = () => {
+    history.push('/pokemon');
+  };
+
+  const goToRandomPokemon = () => {
+    const randomNo = random.int(
+      1,
+      data?.pokemon_v2_pokemon_aggregate.aggregate?.count
+    );
+    history.push(`/pokemon/${randomNo}`);
+  };
+
+  const goToPokemonDetail = (no?: number) => {
+    if (no) {
+      history.push(`/pokemon/${no}`);
+    }
   };
 
   const a11yProps = (index: number) => {
@@ -298,6 +315,11 @@ export const PokemonDetail: React.FC = () => {
   return (
     <PageContainer>
       <Grid container direction="row">
+        <Grid container item xs={12}>
+          <IconButton onClick={goToList}>
+            <ChevronLeft />
+          </IconButton>
+        </Grid>
         <Grid container item xs={4}>
           <Grid item xs={12}>
             <Paper>{`NO. ${'00'.concat(no).slice(-3)}`}</Paper>
@@ -355,8 +377,12 @@ export const PokemonDetail: React.FC = () => {
         </Grid>
         <Grid container item xs={8}>
           <Grid container item xs={12} justify="flex-end">
+            <Button variant="contained" onClick={goToRandomPokemon}>
+              랜덤
+            </Button>
             <Button
               variant="contained"
+              disabled={locale === Locales.KOREAN}
               onClick={() => {
                 setLocale!(Locales.KOREAN);
               }}>
@@ -364,6 +390,7 @@ export const PokemonDetail: React.FC = () => {
             </Button>
             <Button
               variant="contained"
+              disabled={locale === Locales.JAPANESE}
               onClick={() => {
                 setLocale!(Locales.JAPANESE);
               }}>
@@ -371,6 +398,7 @@ export const PokemonDetail: React.FC = () => {
             </Button>
             <Button
               variant="contained"
+              disabled={locale === Locales.ENGLISH}
               onClick={() => {
                 setLocale!(Locales.ENGLISH);
               }}>
@@ -408,7 +436,7 @@ export const PokemonDetail: React.FC = () => {
         <StyledTabPanel value={tab} index={4}>
           <EvolutionChains
             evolutionChains={convertEvolutionChain()}
-            handleMoveTo={handleMoveTo}
+            handleMoveTo={goToPokemonDetail}
           />
         </StyledTabPanel>
       </Grid>

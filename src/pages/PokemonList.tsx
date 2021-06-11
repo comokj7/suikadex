@@ -111,7 +111,7 @@ export const PokemonList: React.FC = () => {
   );
 
   const goRandomPokemon = () => {
-    const randomNo = random.int(0, data?.pokemon_v2_pokemon.length);
+    const randomNo = random.int(1, data?.pokemon_v2_pokemon.length);
     history.push(`/pokemon/${randomNo}`);
   };
 

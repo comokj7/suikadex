@@ -234,4 +234,9 @@ query GetPokemon($no: Int, $locales: [Int!]) {
       }
     }
   }
+  pokemon_v2_pokemon_aggregate(where: { is_default: { _eq: true } }) {
+    aggregate {
+      count(distinct: true, columns: id)
+    }
+  }
 }
