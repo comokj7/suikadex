@@ -51134,7 +51134,10 @@ export const GetPokemonDocument = gql`
           }
         }
       }
-      pokemon_v2_pokemonmoves(order_by: { level: asc }) {
+      pokemon_v2_pokemonmoves(
+        order_by: { move_id: asc }
+        distinct_on: [move_id]
+      ) {
         id
         level
         pokemon_v2_move {

@@ -47,7 +47,7 @@ type PageParameter = {
 const StyledTabPanel = styled(TabPanel)`
   flex: 1 auto;
   width: 100%;
-  height: 50vh;
+  height: 40vh;
   overflow-y: auto;
 `;
 
@@ -112,8 +112,9 @@ export const PokemonDetail: React.FC = () => {
     locale
   );
   const moves = () => {
-    const moves =
-      pokemonInfo?.pokemon_v2_pokemonmoves.filter(naturalMoveFilter);
+    const moves = pokemonInfo?.pokemon_v2_pokemonmoves
+      .filter(naturalMoveFilter)
+      .sort((move, next) => move.level - next.level);
 
     return moves?.map((item) => {
       const name = filterLocaleName(
