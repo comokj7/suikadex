@@ -1,3 +1,4 @@
+export * from './AppBar/AppBar';
 export * from './Tables/AbilityTable';
 export * from './Lists/EvolutionChains';
 export * from './Tables/FlavorTable';

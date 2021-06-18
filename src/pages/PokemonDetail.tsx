@@ -1,25 +1,13 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-
 import axios from 'axios';
-
-import {
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  Tab,
-  Tabs,
-  Typography,
-} from '@material-ui/core';
+import { Button, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import styled from '@emotion/styled';
 
 import { useGetPokemonQuery } from '../graphql/generated/schemas';
 import { Locales } from '../enums';
-import { TypeChip } from '../components/atoms';
-import { SpriteGrid, TabPanel } from '../components/molecules';
 import {
+  ApiEvolution,
   ApiSpecyName,
   ApiTypeName,
   Efficacy,
@@ -27,34 +15,34 @@ import {
   Sprites,
 } from '../interfaces';
 import {
-  enum2array,
-  filterLocaleName,
-  naturalMoveFilter,
-} from '../utils/convertUtil';
+  ContentContainer,
+  ScreenContainer,
+  TypeChip,
+} from '../components/atoms';
+import {
+  BackButton,
+  Loading,
+  SpriteGrid,
+  TabPanel,
+} from '../components/molecules';
 import {
   AbilityTable,
+  AppBar,
   EvolutionChains,
   FlavorTable,
   MoveTable,
   TypeEfficacyTable,
 } from '../components/organisms';
 import { useLocale } from '../providers/LocaleProvider';
-import { ApiEvolution } from '../interfaces';
-import random from 'random';
-import { ChevronLeft } from 'mdi-material-ui';
+import {
+  enum2array,
+  filterLocaleName,
+  naturalMoveFilter,
+} from '../utils/convertUtil';
 
 type PageParameter = {
   no: string;
 };
-
-const PageContainer = styled(Container)`
-  display: flex;
-  flex-flow: column;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  padding: 10px;
-`;
 
 const StyledTabPanel = styled(TabPanel)`
   flex: 1 auto;
@@ -66,7 +54,7 @@ const StyledTabPanel = styled(TabPanel)`
 export const PokemonDetail: React.FC = () => {
   const history = useHistory();
   const { no } = useParams<PageParameter>();
-  const { locale, setLocale } = useLocale();
+  const { locale } = useLocale();
   const [shiny, setShiny] = useState<boolean>(false);
   const [sprites, setSprites] = useState<Sprites>();
   const [tab, setTab] = useState<number>(0);
@@ -84,7 +72,7 @@ export const PokemonDetail: React.FC = () => {
     getSprites(no);
   }, [no]);
 
-  if (loading) return <Typography>Loading...</Typography>;
+  if (loading) return <Loading />;
   if (error) return <Typography>{`${error}`}</Typography>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,14 +82,6 @@ export const PokemonDetail: React.FC = () => {
 
   const goToList = () => {
     history.push('/pokemon');
-  };
-
-  const goToRandomPokemon = () => {
-    const randomNo = random.int(
-      1,
-      data?.pokemon_v2_pokemon_aggregate.aggregate?.count
-    );
-    history.push(`/pokemon/${randomNo}`);
   };
 
   const goToPokemonDetail = (no?: number) => {
@@ -313,133 +293,106 @@ export const PokemonDetail: React.FC = () => {
   };
 
   return (
-    <PageContainer>
-      <Grid container direction="row">
-        <Grid container item xs={12}>
-          <IconButton onClick={goToList}>
-            <ChevronLeft />
-          </IconButton>
-        </Grid>
-        <Grid container item xs={4}>
-          <Grid item xs={12}>
-            <Paper>{`NO. ${'00'.concat(no).slice(-3)}`}</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>{name}</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>
-              {
-                (
+    <ScreenContainer>
+      <AppBar
+        leftButton={<BackButton onClick={goToList} />}
+        title="포켓몬 상세정보"
+        randomRange={data?.pokemon_v2_pokemon_aggregate.aggregate?.count ?? 0}
+      />
+      <ContentContainer>
+        <Grid container direction="row">
+          <Grid container item xs={4}>
+            <Grid item xs={12}>
+              <Paper>{`NO. ${'00'.concat(no).slice(-3)}`}</Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper>{name}</Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper>
+                {
+                  (
+                    filterLocaleName(
+                      specy?.pokemon_v2_pokemonspeciesnames,
+                      locale
+                    )[0] as ApiSpecyName
+                  )?.genus
+                }
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              {types?.map((item, index) => {
+                const typeName = (
                   filterLocaleName(
-                    specy?.pokemon_v2_pokemonspeciesnames,
-                    locale
-                  )[0] as ApiSpecyName
-                )?.genus
-              }
-            </Paper>
-          </Grid>
-          <Grid item xs={12}>
-            {types?.map((item, index) => {
-              const typeName = (
-                filterLocaleName(
-                  item.pokemon_v2_type?.pokemon_v2_typenames,
-                  locale,
-                  true
-                )[0] as ApiTypeName
-              )?.name;
-              return (
-                <TypeChip
-                  key={`types-${index}`}
-                  typeId={item.pokemon_v2_type?.id}
-                  typeName={typeName}
-                />
-              );
-            })}
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>
-              <Grid container item xs={12}>
-                <Grid item xs={6}>
-                  키
+                    item.pokemon_v2_type?.pokemon_v2_typenames,
+                    locale,
+                    true
+                  )[0] as ApiTypeName
+                )?.name;
+                return (
+                  <TypeChip
+                    key={`types-${index}`}
+                    typeId={item.pokemon_v2_type?.id}
+                    typeName={typeName}
+                  />
+                );
+              })}
+            </Grid>
+            <Grid item xs={12}>
+              <Paper>
+                <Grid container item xs={12}>
+                  <Grid item xs={6}>
+                    키
+                  </Grid>
+                  <Grid item xs={6}>{`${height}m`}</Grid>
+                  <Grid item xs={6}>
+                    몸무게
+                  </Grid>
+                  <Grid item xs={6}>{`${weight}kg`}</Grid>
                 </Grid>
-                <Grid item xs={6}>{`${height}m`}</Grid>
-                <Grid item xs={6}>
-                  몸무게
-                </Grid>
-                <Grid item xs={6}>{`${weight}kg`}</Grid>
-              </Grid>
-            </Paper>
+              </Paper>
+            </Grid>
+            <Grid container item xs={12} justify="flex-end">
+              <Button onClick={() => setShiny(!shiny)}>이로치</Button>
+            </Grid>
           </Grid>
-          <Grid container item xs={12} justify="flex-end">
-            <Button onClick={() => setShiny(!shiny)}>이로치</Button>
+          <Grid container item xs={8}>
+            <SpriteGrid
+              shiny={shiny}
+              femaleRate={specy?.gender_rate}
+              hasGenderDiff={hasGenderDiff}
+              sprites={sprites}
+            />
           </Grid>
         </Grid>
-        <Grid container item xs={8}>
-          <Grid container item xs={12} justify="flex-end">
-            <Button variant="contained" onClick={goToRandomPokemon}>
-              랜덤
-            </Button>
-            <Button
-              variant="contained"
-              disabled={locale === Locales.KOREAN}
-              onClick={() => {
-                setLocale!(Locales.KOREAN);
-              }}>
-              한
-            </Button>
-            <Button
-              variant="contained"
-              disabled={locale === Locales.JAPANESE}
-              onClick={() => {
-                setLocale!(Locales.JAPANESE);
-              }}>
-              日
-            </Button>
-            <Button
-              variant="contained"
-              disabled={locale === Locales.ENGLISH}
-              onClick={() => {
-                setLocale!(Locales.ENGLISH);
-              }}>
-              Eng
-            </Button>
-          </Grid>
-          <SpriteGrid
-            shiny={shiny}
-            femaleRate={specy?.gender_rate}
-            hasGenderDiff={hasGenderDiff}
-            sprites={sprites}
-          />
+        <Grid container item xs={12} direction="row" alignContent="flex-start">
+          <Tabs value={tab} onChange={handleTabChange}>
+            <Tab label="설명" {...a11yProps(0)} />
+            <Tab label="기술" {...a11yProps(1)} />
+            <Tab label="특성" {...a11yProps(2)} />
+            <Tab label="상성" {...a11yProps(3)} />
+            <Tab label="진화" {...a11yProps(4)} />
+          </Tabs>
+          <StyledTabPanel value={tab} index={0}>
+            <FlavorTable flavorTextList={flavorTexts} />
+          </StyledTabPanel>
+          <StyledTabPanel value={tab} index={1}>
+            <MoveTable moveList={moves()} />
+          </StyledTabPanel>
+          <StyledTabPanel value={tab} index={2}>
+            <AbilityTable abilityList={abilities} />
+          </StyledTabPanel>
+          <StyledTabPanel value={tab} index={3}>
+            <TypeEfficacyTable efficacyList={convertEfficacies()} />
+          </StyledTabPanel>
+          <StyledTabPanel value={tab} index={4}>
+            <EvolutionChains
+              evolutionChains={convertEvolutionChain()}
+              handleMoveTo={goToPokemonDetail}
+            />
+          </StyledTabPanel>
         </Grid>
-      </Grid>
-      <Grid container item xs={12} direction="row" alignContent="flex-start">
-        <Tabs value={tab} onChange={handleTabChange}>
-          <Tab label="설명" {...a11yProps(0)} />
-          <Tab label="기술" {...a11yProps(1)} />
-          <Tab label="특성" {...a11yProps(2)} />
-          <Tab label="상성" {...a11yProps(3)} />
-          <Tab label="진화" {...a11yProps(4)} />
-        </Tabs>
-        <StyledTabPanel value={tab} index={0}>
-          <FlavorTable flavorTextList={flavorTexts} />
-        </StyledTabPanel>
-        <StyledTabPanel value={tab} index={1}>
-          <MoveTable moveList={moves()} />
-        </StyledTabPanel>
-        <StyledTabPanel value={tab} index={2}>
-          <AbilityTable abilityList={abilities} />
-        </StyledTabPanel>
-        <StyledTabPanel value={tab} index={3}>
-          <TypeEfficacyTable efficacyList={convertEfficacies()} />
-        </StyledTabPanel>
-        <StyledTabPanel value={tab} index={4}>
-          <EvolutionChains
-            evolutionChains={convertEvolutionChain()}
-            handleMoveTo={goToPokemonDetail}
-          />
-        </StyledTabPanel>
-      </Grid>
-    </PageContainer>
+      </ContentContainer>
+    </ScreenContainer>
   );
 };

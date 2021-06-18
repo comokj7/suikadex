@@ -1,2 +1,2 @@
-export { ApiProvider } from './ApiProvider';
-export { LocaleProvider } from './LocaleProvider';
+export * from './ApiProvider';
+export * from './LocaleProvider';

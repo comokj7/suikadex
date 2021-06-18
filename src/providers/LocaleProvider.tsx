@@ -1,19 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { Locales } from '../enums';
 
-type Props = {
-  locale: Locales;
-};
-
 type ContextValue = {
-  locale?: Locales;
-  setLocale?: React.Dispatch<React.SetStateAction<Locales>>;
+  locale: Locales;
+  setLocale: (value: Locales) => void;
 };
 
-const LocaleContext = React.createContext<ContextValue>({});
+const LocaleContext = React.createContext<ContextValue>({
+  locale: Locales.KOREAN,
+  setLocale: (value: Locales) => {
+    console.log(value);
+  },
+});
 
-export const LocaleProvider: React.FC<Props> = ({ children, ...props }) => {
-  const [locale, setLocale] = useState<Locales>(props.locale);
+export const LocaleProvider: React.FC = ({ children }) => {
+  const [locale, setLocale] = useState<Locales>(Locales.KOREAN);
 
   const value = {
     locale,
