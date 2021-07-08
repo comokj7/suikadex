@@ -55,7 +55,7 @@ export const EvolutionChains: React.FC<Props> = (props) => {
                     </ChainPaper>
                   </Grid>
                   <Grid container item xs={8}>
-                    <ChainPaper onClick={() => handleMoveTo(first.id)}>
+                    <ChainPaper onClick={() => handleMoveTo(second.id)}>
                       <Image src={imageSource(second.id)} />
                       <Typography align="center">{second.name}</Typography>
                     </ChainPaper>
