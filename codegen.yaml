@@ -1,4 +1,6 @@
-schema: https://beta.pokeapi.co/graphql/v1beta
+schema:
+  - https://graphql.pokeapi.co/v1beta2:
+      headers: {}
 overwrite: true
 
 hooks:

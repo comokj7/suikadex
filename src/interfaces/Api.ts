@@ -1,85 +1,85 @@
 import { Maybe } from 'graphql/jsutils/Maybe';
 import {
-  Pokemon_V2_Evolutionchain,
-  Pokemon_V2_Pokemonspecies,
-  Pokemon_V2_Pokemonspeciesname,
-  Pokemon_V2_Pokemonevolution,
-  Pokemon_V2_Item,
-  Pokemon_V2_Itemname,
-  Pokemon_V2_Location,
-  Pokemon_V2_Locationname,
-  Pokemon_V2_Region,
-  Pokemon_V2_Regionname,
-  Pokemon_V2_Gender,
-  Pokemon_V2_Evolutiontrigger,
-  Pokemon_V2_Move,
-  Pokemon_V2_Movename,
-  Pokemon_V2_Type,
-  Pokemon_V2_Typename,
-  Pokemon_V2_Pokemon,
-  Pokemon_V2_Pokemonsprites,
-  Pokemon_V2_Pokemontype,
-  Pokemon_V2_Abilityflavortext,
-  Pokemon_V2_Abilityname,
-  Pokemon_V2_Movedamageclass,
-  Pokemon_V2_Movemeta,
-  Pokemon_V2_Movemetaailment,
-  Pokemon_V2_Movemetacategory,
-  Pokemon_V2_Pokemonability,
-  Pokemon_V2_Pokemonmove,
-  Pokemon_V2_Pokemonspeciesflavortext,
-  Pokemon_V2_Typeefficacy,
-  Pokemon_V2_Version,
+  Evolutionchain,
+  Pokemonspecies,
+  Pokemonspeciesname,
+  Pokemonevolution,
+  Item,
+  Itemname,
+  Location,
+  Locationname,
+  Region,
+  Regionname,
+  Gender,
+  Evolutiontrigger,
+  Move,
+  Movename,
+  Type,
+  Typename,
+  Pokemon,
+  Pokemonsprites,
+  Pokemontype,
+  Abilityflavortext,
+  Abilityname,
+  Movedamageclass,
+  Movemeta,
+  Movemetaailment,
+  Movemetacategory,
+  Pokemonability,
+  Pokemonmove,
+  Pokemonspeciesflavortext,
+  Typeefficacy,
+  Version,
 } from '../graphql/generated/schemas';
 
-export type ApiSpecy = { __typename?: 'pokemon_v2_pokemonspecies' } & Pick<
-  Pokemon_V2_Pokemonspecies,
+export type ApiSpecy = { __typename?: 'pokemonspecies' } & Pick<
+  Pokemonspecies,
   'id' | 'evolves_from_species_id'
 > & {
-    pokemon_v2_pokemonspeciesnames: ApiSpecyName[];
-    pokemon_v2_pokemonevolutions: ApiEvolution[];
+    pokemonspeciesnames: ApiSpecyName[];
+    pokemonevolutions: ApiEvolution[];
   };
 
 export type ApiSpecyName = {
-  __typename?: 'pokemon_v2_pokemonspeciesname';
+  __typename?: 'pokemonspeciesname';
 } & Pick<
-  Pokemon_V2_Pokemonspeciesname,
+  Pokemonspeciesname,
   'id' | 'name' | 'genus' | 'language_id'
 >;
 
 export type ApiEvolutionChain = Maybe<
-  { __typename?: 'pokemon_v2_evolutionchain' } & Pick<
-    Pokemon_V2_Evolutionchain,
+  { __typename?: 'evolutionchain' } & Pick<
+    Evolutionchain,
     'id'
   > & {
-      pokemon_v2_pokemonspecies: ApiSpecy[];
+      pokemonspecies: ApiSpecy[];
     }
 >;
 
 export type ApiLocationName = {
-  __typename?: 'pokemon_v2_locationname';
-} & Pick<Pokemon_V2_Locationname, 'id' | 'language_id' | 'name'>;
+  __typename?: 'locationname';
+} & Pick<Locationname, 'id' | 'language_id' | 'name'>;
 
 export type ApiRegionName = {
-  __typename?: 'pokemon_v2_regionname';
-} & Pick<Pokemon_V2_Regionname, 'id' | 'language_id' | 'name'>;
+  __typename?: 'regionname';
+} & Pick<Regionname, 'id' | 'language_id' | 'name'>;
 
 export type ApiTypeName = {
-  __typename?: 'pokemon_v2_typename';
-} & Pick<Pokemon_V2_Typename, 'id' | 'language_id' | 'name'>;
+  __typename?: 'typename';
+} & Pick<Typename, 'id' | 'language_id' | 'name'>;
 
 export type ApiMoveName = {
-  __typename?: 'pokemon_v2_movename';
-} & Pick<Pokemon_V2_Movename, 'id' | 'language_id' | 'name'>;
+  __typename?: 'movename';
+} & Pick<Movename, 'id' | 'language_id' | 'name'>;
 
 export type ApiItemName = {
-  __typename?: 'pokemon_v2_itemname';
-} & Pick<Pokemon_V2_Itemname, 'id' | 'language_id' | 'name'>;
+  __typename?: 'itemname';
+} & Pick<Itemname, 'id' | 'language_id' | 'name'>;
 
 export type ApiEvolution = {
-  __typename?: 'pokemon_v2_pokemonevolution';
+  __typename?: 'pokemonevolution';
 } & Pick<
-  Pokemon_V2_Pokemonevolution,
+  Pokemonevolution,
   | 'id'
   | 'min_affection'
   | 'min_beauty'
@@ -90,137 +90,137 @@ export type ApiEvolution = {
   | 'turn_upside_down'
   | 'needs_overworld_rain'
 > & {
-    pokemon_v2_item?: Maybe<
-      { __typename?: 'pokemon_v2_item' } & Pick<Pokemon_V2_Item, 'id'> & {
-          pokemon_v2_itemnames: ApiItemName[];
+    item?: Maybe<
+      { __typename?: 'item' } & Pick<Item, 'id'> & {
+          itemnames: ApiItemName[];
         }
     >;
-    pokemon_v2_location?: Maybe<
-      { __typename?: 'pokemon_v2_location' } & Pick<
-        Pokemon_V2_Location,
+    location?: Maybe<
+      { __typename?: 'location' } & Pick<
+        Location,
         'id'
       > & {
-          pokemon_v2_locationnames: ApiLocationName[];
-          pokemon_v2_region?: Maybe<
+          locationnames: ApiLocationName[];
+          region?: Maybe<
             {
-              __typename?: 'pokemon_v2_region';
-            } & Pick<Pokemon_V2_Region, 'id'> & {
-                pokemon_v2_regionnames: Array<
+              __typename?: 'region';
+            } & Pick<Region, 'id'> & {
+                regionnames: Array<
                   {
-                    __typename?: 'pokemon_v2_regionname';
-                  } & Pick<Pokemon_V2_Regionname, 'id' | 'language_id' | 'name'>
+                    __typename?: 'regionname';
+                  } & Pick<Regionname, 'id' | 'language_id' | 'name'>
                 >;
               }
           >;
         }
     >;
-    pokemon_v2_gender?: Maybe<
-      { __typename?: 'pokemon_v2_gender' } & Pick<
-        Pokemon_V2_Gender,
+    gender?: Maybe<
+      { __typename?: 'gender' } & Pick<
+        Gender,
         'id' | 'name'
       >
     >;
-    pokemon_v2_evolutiontrigger?: Maybe<
+    evolutiontrigger?: Maybe<
       {
-        __typename?: 'pokemon_v2_evolutiontrigger';
-      } & Pick<Pokemon_V2_Evolutiontrigger, 'id' | 'name'>
+        __typename?: 'evolutiontrigger';
+      } & Pick<Evolutiontrigger, 'id' | 'name'>
     >;
-    pokemonV2PokemonspecyByPartySpeciesId?: Maybe<
+    PokemonspecyByPartySpeciesId?: Maybe<
       {
-        __typename?: 'pokemon_v2_pokemonspecies';
-      } & Pick<Pokemon_V2_Pokemonspecies, 'id'> & {
-          pokemon_v2_pokemonspeciesnames: Array<
+        __typename?: 'pokemonspecies';
+      } & Pick<Pokemonspecies, 'id'> & {
+          pokemonspeciesnames: Array<
             {
-              __typename?: 'pokemon_v2_pokemonspeciesname';
+              __typename?: 'pokemonspeciesname';
             } & Pick<
-              Pokemon_V2_Pokemonspeciesname,
+              Pokemonspeciesname,
               'id' | 'language_id' | 'name'
             >
           >;
         }
     >;
-    pokemonV2PokemonspecyByTradeSpeciesId?: Maybe<
+    PokemonspecyByTradeSpeciesId?: Maybe<
       {
-        __typename?: 'pokemon_v2_pokemonspecies';
-      } & Pick<Pokemon_V2_Pokemonspecies, 'id'> & {
-          pokemon_v2_pokemonspeciesnames: Array<
+        __typename?: 'pokemonspecies';
+      } & Pick<Pokemonspecies, 'id'> & {
+          pokemonspeciesnames: Array<
             {
-              __typename?: 'pokemon_v2_pokemonspeciesname';
+              __typename?: 'pokemonspeciesname';
             } & Pick<
-              Pokemon_V2_Pokemonspeciesname,
+              Pokemonspeciesname,
               'id' | 'language_id' | 'name'
             >
           >;
         }
     >;
-    pokemonV2ItemByHeldItemId?: Maybe<
-      { __typename?: 'pokemon_v2_item' } & Pick<Pokemon_V2_Item, 'id'> & {
-          pokemon_v2_itemnames: Array<
+    ItemByHeldItemId?: Maybe<
+      { __typename?: 'item' } & Pick<Item, 'id'> & {
+          itemnames: Array<
             {
-              __typename?: 'pokemon_v2_itemname';
-            } & Pick<Pokemon_V2_Itemname, 'id' | 'language_id' | 'name'>
+              __typename?: 'itemname';
+            } & Pick<Itemname, 'id' | 'language_id' | 'name'>
           >;
         }
     >;
-    pokemon_v2_move?: Maybe<
-      { __typename?: 'pokemon_v2_move' } & Pick<Pokemon_V2_Move, 'id'> & {
-          pokemon_v2_movenames: Array<
+    move?: Maybe<
+      { __typename?: 'move' } & Pick<Move, 'id'> & {
+          movenames: Array<
             {
-              __typename?: 'pokemon_v2_movename';
-            } & Pick<Pokemon_V2_Movename, 'id' | 'language_id' | 'name'>
+              __typename?: 'movename';
+            } & Pick<Movename, 'id' | 'language_id' | 'name'>
           >;
-          pokemon_v2_type?: Maybe<
+          type?: Maybe<
             {
-              __typename?: 'pokemon_v2_type';
-            } & Pick<Pokemon_V2_Type, 'id'> & {
-                pokemon_v2_typenames: Array<
+              __typename?: 'type';
+            } & Pick<Type, 'id'> & {
+                typenames: Array<
                   {
-                    __typename?: 'pokemon_v2_typename';
-                  } & Pick<Pokemon_V2_Typename, 'id' | 'language_id' | 'name'>
+                    __typename?: 'typename';
+                  } & Pick<Typename, 'id' | 'language_id' | 'name'>
                 >;
               }
           >;
         }
     >;
-    pokemonV2TypeByPartyTypeId?: Maybe<
-      { __typename?: 'pokemon_v2_type' } & Pick<Pokemon_V2_Type, 'id'> & {
-          pokemon_v2_typenames: Array<
+    TypeByPartyTypeId?: Maybe<
+      { __typename?: 'type' } & Pick<Type, 'id'> & {
+          typenames: Array<
             {
-              __typename?: 'pokemon_v2_typename';
-            } & Pick<Pokemon_V2_Typename, 'id' | 'language_id' | 'name'>
+              __typename?: 'typename';
+            } & Pick<Typename, 'id' | 'language_id' | 'name'>
           >;
         }
     >;
-    pokemon_v2_type?: Maybe<
-      { __typename?: 'pokemon_v2_type' } & Pick<Pokemon_V2_Type, 'id'> & {
-          pokemon_v2_typenames: Array<
+    type?: Maybe<
+      { __typename?: 'type' } & Pick<Type, 'id'> & {
+          typenames: Array<
             {
-              __typename?: 'pokemon_v2_typename';
-            } & Pick<Pokemon_V2_Typename, 'id' | 'language_id' | 'name'>
+              __typename?: 'typename';
+            } & Pick<Typename, 'id' | 'language_id' | 'name'>
           >;
         }
     >;
   };
 
-export type ApiPokemonSimple = { __typename?: 'pokemon_v2_pokemon' } & Pick<
-  Pokemon_V2_Pokemon,
+export type ApiPokemonSimple = { __typename?: 'pokemon' } & Pick<
+  Pokemon,
   'id'
 > & {
-    pokemon_v2_pokemonsprites: Array<
-      { __typename?: 'pokemon_v2_pokemonsprites' } & Pick<
-        Pokemon_V2_Pokemonsprites,
+    pokemonsprites: Array<
+      { __typename?: 'pokemonsprites' } & Pick<
+        Pokemonsprites,
         'id' | 'sprites'
       >
     >;
-    pokemon_v2_pokemonspecy?: Maybe<ApiSpecy>;
-    pokemon_v2_pokemontypes: Array<
-      { __typename?: 'pokemon_v2_pokemontype' } & Pick<
-        Pokemon_V2_Pokemontype,
+    pokemonspecy?: Maybe<ApiSpecy>;
+    pokemontypes: Array<
+      { __typename?: 'pokemontype' } & Pick<
+        Pokemontype,
         'id'
       > & {
-          pokemon_v2_type?: Maybe<
-            { __typename?: 'pokemon_v2_type' } & Pick<
-              Pokemon_V2_Type,
+          type?: Maybe<
+            { __typename?: 'type' } & Pick<
+              Type,
               'id' | 'name'
             >
           >;
@@ -229,71 +229,71 @@ export type ApiPokemonSimple = { __typename?: 'pokemon_v2_pokemon' } & Pick<
   };
 
 export type ApiSpecyFlavorText = {
-  __typename?: 'pokemon_v2_pokemonspeciesflavortext';
+  __typename?: 'pokemonspeciesflavortext';
 } & Pick<
-  Pokemon_V2_Pokemonspeciesflavortext,
+  Pokemonspeciesflavortext,
   'id' | 'flavor_text' | 'language_id'
 > & {
-    pokemon_v2_version?: Maybe<
-      { __typename?: 'pokemon_v2_version' } & Pick<
-        Pokemon_V2_Version,
+    version?: Maybe<
+      { __typename?: 'version' } & Pick<
+        Version,
         'id' | 'name'
       >
     >;
   };
 
-export type ApiAbility = { __typename?: 'pokemon_v2_pokemonability' } & Pick<
-  Pokemon_V2_Pokemonability,
+export type ApiAbility = { __typename?: 'pokemonability' } & Pick<
+  Pokemonability,
   'id'
 > & {
-    pokemon_v2_ability?: Maybe<
-      { __typename?: 'pokemon_v2_ability' } & {
-        pokemon_v2_abilitynames: ApiAbilityName[];
-        pokemon_v2_abilityflavortexts: ApiAbilityFlavorText[];
+    ability?: Maybe<
+      { __typename?: 'ability' } & {
+        abilitynames: ApiAbilityName[];
+        abilityflavortexts: ApiAbilityFlavorText[];
       }
     >;
   };
 
 export type ApiAbilityFlavorText = {
-  __typename?: 'pokemon_v2_abilityflavortext';
-} & Pick<Pokemon_V2_Abilityflavortext, 'id' | 'flavor_text' | 'language_id'>;
+  __typename?: 'abilityflavortext';
+} & Pick<Abilityflavortext, 'id' | 'flavor_text' | 'language_id'>;
 
-export type ApiAbilityName = { __typename?: 'pokemon_v2_abilityname' } & Pick<
-  Pokemon_V2_Abilityname,
+export type ApiAbilityName = { __typename?: 'abilityname' } & Pick<
+  Abilityname,
   'id' | 'name' | 'language_id'
 >;
 
-export type ApiPokemonListItem = { __typename?: 'pokemon_v2_pokemon' } & Pick<
-  Pokemon_V2_Pokemon,
+export type ApiPokemonListItem = { __typename?: 'pokemon' } & Pick<
+  Pokemon,
   'id'
 > & {
-    pokemon_v2_pokemonsprites: Array<
-      { __typename?: 'pokemon_v2_pokemonsprites' } & Pick<
-        Pokemon_V2_Pokemonsprites,
+    pokemonsprites: Array<
+      { __typename?: 'pokemonsprites' } & Pick<
+        Pokemonsprites,
         'id' | 'sprites'
       >
     >;
-    pokemon_v2_pokemonspecy?: Maybe<
-      { __typename?: 'pokemon_v2_pokemonspecies' } & Pick<
-        Pokemon_V2_Pokemonspecies,
+    pokemonspecy?: Maybe<
+      { __typename?: 'pokemonspecies' } & Pick<
+        Pokemonspecies,
         'id'
       > & {
-          pokemon_v2_pokemonspeciesnames: Array<
-            { __typename?: 'pokemon_v2_pokemonspeciesname' } & Pick<
-              Pokemon_V2_Pokemonspeciesname,
+          pokemonspeciesnames: Array<
+            { __typename?: 'pokemonspeciesname' } & Pick<
+              Pokemonspeciesname,
               'id' | 'language_id' | 'name'
             >
           >;
         }
     >;
-    pokemon_v2_pokemontypes: Array<
-      { __typename?: 'pokemon_v2_pokemontype' } & Pick<
-        Pokemon_V2_Pokemontype,
+    pokemontypes: Array<
+      { __typename?: 'pokemontype' } & Pick<
+        Pokemontype,
         'id'
       > & {
-          pokemon_v2_type?: Maybe<
-            { __typename?: 'pokemon_v2_type' } & Pick<
-              Pokemon_V2_Type,
+          type?: Maybe<
+            { __typename?: 'type' } & Pick<
+              Type,
               'id' | 'name'
             >
           >;
@@ -301,43 +301,43 @@ export type ApiPokemonListItem = { __typename?: 'pokemon_v2_pokemon' } & Pick<
     >;
   };
 
-export type ApiPokemon = { __typename?: 'pokemon_v2_pokemon' } & Pick<
-  Pokemon_V2_Pokemon,
+export type ApiPokemon = { __typename?: 'pokemon' } & Pick<
+  Pokemon,
   'id' | 'height' | 'weight'
 > & {
-    pokemon_v2_pokemonspecy?: Maybe<
-      { __typename?: 'pokemon_v2_pokemonspecies' } & Pick<
-        Pokemon_V2_Pokemonspecies,
+    pokemonspecy?: Maybe<
+      { __typename?: 'pokemonspecies' } & Pick<
+        Pokemonspecies,
         'id' | 'has_gender_differences' | 'gender_rate'
       > & {
-          pokemon_v2_pokemonspeciesnames: Array<
-            { __typename?: 'pokemon_v2_pokemonspeciesname' } & Pick<
-              Pokemon_V2_Pokemonspeciesname,
+          pokemonspeciesnames: Array<
+            { __typename?: 'pokemonspeciesname' } & Pick<
+              Pokemonspeciesname,
               'id' | 'name' | 'genus' | 'language_id'
             >
           >;
-          pokemon_v2_pokemonspeciesflavortexts: ApiSpecyFlavorText[];
-          pokemon_v2_evolutionchain?: Maybe<ApiEvolutionChain>;
+          pokemonspeciesflavortexts: ApiSpecyFlavorText[];
+          evolutionchain?: Maybe<ApiEvolutionChain>;
         }
     >;
-    pokemon_v2_pokemontypes: Array<
-      { __typename?: 'pokemon_v2_pokemontype' } & Pick<
-        Pokemon_V2_Pokemontype,
+    pokemontypes: Array<
+      { __typename?: 'pokemontype' } & Pick<
+        Pokemontype,
         'id'
       > & {
-          pokemon_v2_type?: Maybe<
-            { __typename?: 'pokemon_v2_type' } & Pick<Pokemon_V2_Type, 'id'> & {
-                pokemon_v2_typenames: ApiTypeName[];
-                pokemonV2TypeefficaciesByTargetTypeId: Array<
-                  { __typename?: 'pokemon_v2_typeefficacy' } & Pick<
-                    Pokemon_V2_Typeefficacy,
+          type?: Maybe<
+            { __typename?: 'type' } & Pick<Type, 'id'> & {
+                typenames: ApiTypeName[];
+                TypeefficaciesByTargetTypeId: Array<
+                  { __typename?: 'typeefficacy' } & Pick<
+                    Typeefficacy,
                     'id' | 'damage_factor'
                   > & {
-                      pokemon_v2_type?: Maybe<
-                        { __typename?: 'pokemon_v2_type' } & Pick<
-                          Pokemon_V2_Type,
+                      type?: Maybe<
+                        { __typename?: 'type' } & Pick<
+                          Type,
                           'id'
-                        > & { pokemon_v2_typenames: ApiTypeName[] }
+                        > & { typenames: ApiTypeName[] }
                       >;
                     }
                 >;
@@ -345,26 +345,26 @@ export type ApiPokemon = { __typename?: 'pokemon_v2_pokemon' } & Pick<
           >;
         }
     >;
-    pokemon_v2_pokemonmoves: Array<
-      { __typename?: 'pokemon_v2_pokemonmove' } & Pick<
-        Pokemon_V2_Pokemonmove,
+    pokemonmoves: Array<
+      { __typename?: 'pokemonmove' } & Pick<
+        Pokemonmove,
         'id' | 'level'
       > & {
-          pokemon_v2_move?: Maybe<
-            { __typename?: 'pokemon_v2_move' } & Pick<
-              Pokemon_V2_Move,
+          move?: Maybe<
+            { __typename?: 'move' } & Pick<
+              Move,
               'id' | 'accuracy' | 'pp' | 'priority' | 'power'
             > & {
-                pokemon_v2_movenames: ApiMoveName[];
-                pokemon_v2_movedamageclass?: Maybe<
-                  { __typename?: 'pokemon_v2_movedamageclass' } & Pick<
-                    Pokemon_V2_Movedamageclass,
+                movenames: ApiMoveName[];
+                movedamageclass?: Maybe<
+                  { __typename?: 'movedamageclass' } & Pick<
+                    Movedamageclass,
                     'id' | 'name'
                   >
                 >;
-                pokemon_v2_movemeta: Array<
-                  { __typename?: 'pokemon_v2_movemeta' } & Pick<
-                    Pokemon_V2_Movemeta,
+                movemeta: Array<
+                  { __typename?: 'movemeta' } & Pick<
+                    Movemeta,
                     | 'id'
                     | 'ailment_chance'
                     | 'crit_rate'
@@ -377,15 +377,15 @@ export type ApiPokemon = { __typename?: 'pokemon_v2_pokemon' } & Pick<
                     | 'min_turns'
                     | 'stat_chance'
                   > & {
-                      pokemon_v2_movemetaailment?: Maybe<
+                      movemetaailment?: Maybe<
                         {
-                          __typename?: 'pokemon_v2_movemetaailment';
-                        } & Pick<Pokemon_V2_Movemetaailment, 'id' | 'name'>
+                          __typename?: 'movemetaailment';
+                        } & Pick<Movemetaailment, 'id' | 'name'>
                       >;
-                      pokemon_v2_movemetacategory?: Maybe<
+                      movemetacategory?: Maybe<
                         {
-                          __typename?: 'pokemon_v2_movemetacategory';
-                        } & Pick<Pokemon_V2_Movemetacategory, 'id' | 'name'>
+                          __typename?: 'movemetacategory';
+                        } & Pick<Movemetacategory, 'id' | 'name'>
                       >;
                     }
                 >;
@@ -393,5 +393,5 @@ export type ApiPokemon = { __typename?: 'pokemon_v2_pokemon' } & Pick<
           >;
         }
     >;
-    pokemon_v2_pokemonabilities: ApiAbility[];
+    pokemonabilities: ApiAbility[];
   };

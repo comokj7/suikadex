@@ -5,7 +5,7 @@ import { Button, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import styled from '@emotion/styled';
 
 import { useGetPokemonQuery } from '../graphql/generated/schemas';
-import { Locales } from '../enums';
+import { DamageClasses, Locales } from '../enums';
 import {
   ApiEvolution,
   ApiSpecyName,
@@ -97,28 +97,35 @@ export const PokemonDetail: React.FC = () => {
     };
   };
 
-  const pokemonInfo = data?.pokemon_v2_pokemon[0];
+  const pokemonInfo = data?.pokemon[0];
   const name = filterLocaleName(
-    pokemonInfo?.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonspeciesnames,
+    pokemonInfo?.pokemonspecy?.pokemonspeciesnames,
     locale
   )[0]?.name;
-  const specy = pokemonInfo?.pokemon_v2_pokemonspecy;
-  const types = pokemonInfo?.pokemon_v2_pokemontypes;
+  const specy = pokemonInfo?.pokemonspecy;
+  const types = pokemonInfo?.pokemontypes;
   const height = ((pokemonInfo?.height ?? 0) / 10).toFixed(1);
   const weight = ((pokemonInfo?.weight ?? 0) / 10).toFixed(1);
   const hasGenderDiff = specy?.has_gender_differences;
   const flavorTexts = filterLocaleName(
-    specy?.pokemon_v2_pokemonspeciesflavortexts,
+    specy?.pokemonspeciesflavortexts,
     locale
   );
   const moves = () => {
-    const moves = pokemonInfo?.pokemon_v2_pokemonmoves
+    const moves = pokemonInfo?.pokemonmoves
       .filter(naturalMoveFilter)
       .sort((move, next) => move.level - next.level);
 
     return moves?.map((item) => {
       const name = filterLocaleName(
-        item.pokemon_v2_move?.pokemon_v2_movenames,
+        item.move?.movenames,
+        locale
+      )[0].name;
+
+      const damageClass = DamageClasses[item.move?.movedamageclass?.name as keyof typeof DamageClasses].name;
+
+      const type = filterLocaleName(
+        item.move?.type?.typenames,
         locale
       )[0].name;
 
@@ -126,19 +133,22 @@ export const PokemonDetail: React.FC = () => {
         id: item.id,
         level: item.level,
         name,
+        damageClass,
+        type,
+        pp: item.move?.pp,
       };
     });
   };
-  const abilities = pokemonInfo?.pokemon_v2_pokemonabilities;
-  const evolutionChain = specy?.pokemon_v2_evolutionchain;
+  const abilities = pokemonInfo?.pokemonabilities;
+  const evolutionChain = specy?.evolutionchain;
 
   const convertEfficacies = () => {
     const efficacies = new Array<Efficacy>();
 
     types?.forEach((type) =>
-      type.pokemon_v2_type?.pokemonV2TypeefficaciesByTargetTypeId.forEach(
+      type.type?.TypeefficaciesByTargetTypeId.forEach(
         (efficacy) => {
-          const efficacyId = efficacy.pokemon_v2_type?.id;
+          const efficacyId = efficacy.type?.id;
           const prev = efficacies.find((item) => item.id === efficacyId);
 
           if (prev) {
@@ -166,7 +176,7 @@ export const PokemonDetail: React.FC = () => {
             efficacies.push({
               id: efficacyId,
               name: filterLocaleName(
-                efficacy.pokemon_v2_type?.pokemon_v2_typenames,
+                efficacy.type?.typenames,
                 locale,
                 true
               )[0].name,
@@ -184,51 +194,51 @@ export const PokemonDetail: React.FC = () => {
   const createEvolutionConditions = (evolutions: ApiEvolution[]) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return evolutions.map((evolution: ApiEvolution) => ({
-      trigger: evolution?.pokemon_v2_evolutiontrigger?.name,
-      gender: evolution?.pokemon_v2_gender?.name,
+      trigger: evolution?.evolutiontrigger?.name,
+      gender: evolution?.gender?.name,
       minLevel: evolution?.min_level,
       minHappiness: evolution?.min_happiness,
       minBeauty: evolution?.min_beauty,
       minAffection: evolution?.min_affection,
       timeOfDay: evolution?.time_of_day,
       useItem: filterLocaleName(
-        evolution?.pokemon_v2_item?.pokemon_v2_itemnames,
+        evolution?.item?.itemnames,
         locale
       )[0]?.name,
       heldItem: filterLocaleName(
-        evolution?.pokemonV2ItemByHeldItemId?.pokemon_v2_itemnames,
+        evolution?.ItemByHeldItemId?.itemnames,
         locale
       )[0]?.name,
       tradePokemon: filterLocaleName(
-        evolution?.pokemonV2PokemonspecyByTradeSpeciesId
-          ?.pokemon_v2_pokemonspeciesnames,
+        evolution?.PokemonspecyByTradeSpeciesId
+          ?.pokemonspeciesnames,
         locale
       )[0]?.name,
       partyPokemon: filterLocaleName(
-        evolution?.pokemonV2PokemonspecyByPartySpeciesId
-          ?.pokemon_v2_pokemonspeciesnames,
+        evolution?.PokemonspecyByPartySpeciesId
+          ?.pokemonspeciesnames,
         locale
       )[0]?.name,
       partyType: filterLocaleName(
-        evolution.pokemonV2TypeByPartyTypeId?.pokemon_v2_typenames,
+        evolution.TypeByPartyTypeId?.typenames,
         locale
       )[0]?.name,
       move: filterLocaleName(
-        evolution.pokemon_v2_move?.pokemon_v2_movenames,
+        evolution.move?.movenames,
         locale
       )[0]?.name,
       moveType: filterLocaleName(
-        evolution.pokemon_v2_type?.pokemon_v2_typenames,
+        evolution.type?.typenames,
         locale
       )[0]?.name,
       where: {
         region: filterLocaleName(
-          evolution?.pokemon_v2_location?.pokemon_v2_region
-            ?.pokemon_v2_regionnames,
+          evolution?.location?.region
+            ?.regionnames,
           locale
         )[0]?.name,
         location: filterLocaleName(
-          evolution?.pokemon_v2_location?.pokemon_v2_locationnames,
+          evolution?.location?.locationnames,
           locale
         )[0]?.name,
       },
@@ -237,15 +247,15 @@ export const PokemonDetail: React.FC = () => {
 
   const convertEvolutionChain = () => {
     const result: EvolutionChain = [];
-    const species = evolutionChain?.pokemon_v2_pokemonspecies;
+    const species = evolutionChain?.pokemonspecies;
     const firsts = species?.filter((item) => !item.evolves_from_species_id);
 
     firsts?.forEach((item) => {
       const name = filterLocaleName(
-        item.pokemon_v2_pokemonspeciesnames,
+        item.pokemonspeciesnames,
         locale
       )[0].name;
-      const evolutions = item.pokemon_v2_pokemonevolutions;
+      const evolutions = item.pokemonevolutions;
 
       result.push({
         id: item.id,
@@ -260,12 +270,12 @@ export const PokemonDetail: React.FC = () => {
       );
 
       first.next = seconds?.map((second) => {
-        const evolutions = second.pokemon_v2_pokemonevolutions;
+        const evolutions = second.pokemonevolutions;
 
         return {
           id: second.id,
           name: filterLocaleName(
-            second.pokemon_v2_pokemonspeciesnames,
+            second.pokemonspeciesnames,
             locale
           )[0].name,
           conditions: createEvolutionConditions(evolutions),
@@ -278,11 +288,11 @@ export const PokemonDetail: React.FC = () => {
         );
 
         second.next = thirds?.map((third) => {
-          const evolutions = third.pokemon_v2_pokemonevolutions;
+          const evolutions = third.pokemonevolutions;
 
           return {
             id: third.id,
-            name: filterLocaleName(third.pokemon_v2_pokemonspeciesnames)[0]
+            name: filterLocaleName(third.pokemonspeciesnames)[0]
               ?.name,
             conditions: createEvolutionConditions(evolutions),
           };
@@ -298,7 +308,7 @@ export const PokemonDetail: React.FC = () => {
       <AppBar
         leftButton={<BackButton onClick={goToList} />}
         title="포켓몬 상세정보"
-        randomRange={data?.pokemon_v2_pokemon_aggregate.aggregate?.count ?? 0}
+        randomRange={data?.pokemon_aggregate.aggregate?.count ?? 0}
       />
       <ContentContainer>
         <Grid container direction="row">
@@ -314,7 +324,7 @@ export const PokemonDetail: React.FC = () => {
                 {
                   (
                     filterLocaleName(
-                      specy?.pokemon_v2_pokemonspeciesnames,
+                      specy?.pokemonspeciesnames,
                       locale
                     )[0] as ApiSpecyName
                   )?.genus
@@ -325,7 +335,7 @@ export const PokemonDetail: React.FC = () => {
               {types?.map((item, index) => {
                 const typeName = (
                   filterLocaleName(
-                    item.pokemon_v2_type?.pokemon_v2_typenames,
+                    item.type?.typenames,
                     locale,
                     true
                   )[0] as ApiTypeName
@@ -333,7 +343,7 @@ export const PokemonDetail: React.FC = () => {
                 return (
                   <TypeChip
                     key={`types-${index}`}
-                    typeId={item.pokemon_v2_type?.id}
+                    typeId={item.type?.id}
                     typeName={typeName}
                   />
                 );

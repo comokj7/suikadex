@@ -35,9 +35,9 @@ export const AbilityTable: React.FC<Props> = (props) => {
         </TableHead>
         <TableBody>
           {abilityList?.map((item, index) => {
-            const names = item.pokemon_v2_ability?.pokemon_v2_abilitynames;
+            const names = item.ability?.abilitynames;
             const flavorTexts =
-              item.pokemon_v2_ability?.pokemon_v2_abilityflavortexts;
+              item.ability?.abilityflavortexts;
 
             return (
               <TableRow key={`abilities-${index}`}>

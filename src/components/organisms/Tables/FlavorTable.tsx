@@ -12,7 +12,7 @@ type Props = {
   flavorTextList?: Array<{
     id?: number | null;
     flavor_text?: string | null;
-    pokemon_v2_version?: {
+    version?: {
       id?: number | null;
       name?: string | null;
     } | null;
@@ -34,7 +34,7 @@ export const FlavorTable: React.FC<Props> = (props) => {
         <TableBody>
           {flavorTextList?.map((item, index) => (
             <TableRow key={`flavor-text-${index}`}>
-              <TableCell>{item.pokemon_v2_version?.name}</TableCell>
+              <TableCell>{item.version?.name}</TableCell>
               <TableCell>{item.flavor_text}</TableCell>
             </TableRow>
           ))}

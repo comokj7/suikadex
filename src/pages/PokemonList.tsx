@@ -62,18 +62,18 @@ export const PokemonList: React.FC = () => {
   }, 1000);
 
   useEffect(() => {
-    const filtered = data?.pokemon_v2_pokemon.filter((pokemon) => {
+    const filtered = data?.pokemon.filter((pokemon) => {
       // 키워드 체크
       let keywordMatched = false;
 
       if (Number(keyword)) {
         // 전국도감 번호 체크
         keywordMatched =
-          pokemon.pokemon_v2_pokemonspecy?.id === Number(keyword);
+          pokemon.pokemonspecy?.id === Number(keyword);
       } else {
         // 이름 체크
         const names =
-          pokemon.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonspeciesnames.map(
+          pokemon.pokemonspecy?.pokemonspeciesnames.map(
             (specy) => specy.name
           );
         keywordMatched = Boolean(
@@ -82,13 +82,13 @@ export const PokemonList: React.FC = () => {
       }
 
       // 속성 체크
-      const types = pokemon.pokemon_v2_pokemontypes;
+      const types = pokemon.pokemontypes;
       const type1Matched =
         type1 === 0 ||
-        Boolean(types.find((type) => type.pokemon_v2_type?.id === type1));
+        Boolean(types.find((type) => type.type?.id === type1));
       const type2Matched =
         type2 === 0 ||
-        Boolean(types.find((type) => type.pokemon_v2_type?.id === type2));
+        Boolean(types.find((type) => type.type?.id === type2));
 
       return keywordMatched && type1Matched && type2Matched;
     });
@@ -98,7 +98,7 @@ export const PokemonList: React.FC = () => {
   if (loading) return <Loading />;
   if (error) return <Typography>{`${error}`}</Typography>;
 
-  const filteredTypeList = data?.pokemon_v2_typename.filter(
+  const filteredTypeList = data?.typename.filter(
     (type) => type.language_id === locale
   );
 
@@ -127,7 +127,7 @@ export const PokemonList: React.FC = () => {
       <AppBar
         leftButton={<MenuButton />}
         title="포켓몬 리스트"
-        randomRange={data?.pokemon_v2_pokemon.length ?? 0}
+        randomRange={data?.pokemon.length ?? 0}
       />
       <ContentContainer>
         <FilterGrid container direction="row">
@@ -174,7 +174,7 @@ export const PokemonList: React.FC = () => {
         <StyledList>
           {pokemons?.map((pokemon) => {
             const names =
-              pokemon.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonspeciesnames;
+              pokemon.pokemonspecy?.pokemonspeciesnames;
             return (
               <ListItem
                 key={pokemon?.id}
