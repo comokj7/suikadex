@@ -6,7 +6,7 @@ import { PokemonList } from '../pages/PokemonList';
 
 export const Router: React.FC = () => {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Switch>
         <Route path="/pokemon/:no">
           <PokemonDetail />
