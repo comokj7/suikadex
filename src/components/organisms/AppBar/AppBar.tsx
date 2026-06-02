@@ -5,12 +5,12 @@ import {
   Button,
   ButtonGroup,
   Toolbar,
-} from '@material-ui/core';
+} from '@mui/material';
 import random from 'random';
 import { PageTitle } from '../../atoms';
 import { Locales } from '../../../enums';
 import { useLocale } from '../../../providers';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 
 type Props = {
   leftButton: ReactNode;

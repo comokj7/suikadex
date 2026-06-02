@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
-export const ApiProvider: React.FC = ({ children }) => {
+interface Props {
+  children: ReactNode;
+}
+
+export const ApiProvider: React.FC<Props> = ({ children }) => {
   const client = new ApolloClient({
     uri: 'https://graphql.pokeapi.co/v1beta2/',
     headers: {

@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
-import { Button, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
+import { Button, Grid, Paper, Tab, Tabs, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 
 import { useGetPokemonQuery } from '../graphql/generated/schemas';
@@ -76,7 +76,7 @@ export const PokemonDetail: React.FC = () => {
   if (error) return <Typography>{`${error}`}</Typography>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleTabChange = (_: React.ChangeEvent<ReactNode>, newTab: any) => {
+  const handleTabChange = (_: React.SyntheticEvent<Element, Event>, newTab: any) => {
     setTab(newTab);
   };
 
@@ -363,7 +363,7 @@ export const PokemonDetail: React.FC = () => {
                 </Grid>
               </Paper>
             </Grid>
-            <Grid container item xs={12} justify="flex-end">
+            <Grid container item xs={12} justifyContent="flex-end">
               <Button onClick={() => setShiny(!shiny)}>이로치</Button>
             </Grid>
           </Grid>

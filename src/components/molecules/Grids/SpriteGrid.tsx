@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper } from '@mui/material';
 import styled from '@emotion/styled';
 
 import { GenderIcon, Image } from '../../atoms';
@@ -25,12 +25,12 @@ export const SpriteGrid: React.FC<Props> = (props) => {
       <Grid item xs={2}>
         {<GenderIcon femaleRate={femaleRate} hasGenderDiff={hasGenderDiff} />}
       </Grid>
-      <Grid container item xs={5} justify="center">
+      <Grid container item xs={5} justifyContent="center">
         <SpritePaper>
           <Image src={sprites?.sprites.front_shiny ?? ''} />
         </SpritePaper>
       </Grid>
-      <Grid container item xs={5} justify="center">
+      <Grid container item xs={5} justifyContent="center">
         <SpritePaper>
           <Image src={sprites?.sprites.back_shiny ?? ''} />
         </SpritePaper>
@@ -40,12 +40,12 @@ export const SpriteGrid: React.FC<Props> = (props) => {
           <Grid item xs={2}>
             {<GenderIcon femaleRate={8} hasGenderDiff={hasGenderDiff} />}
           </Grid>
-          <Grid container item xs={5} justify="center">
+          <Grid container item xs={5} justifyContent="center">
             <SpritePaper>
               <Image src={sprites?.sprites.front_shiny_female ?? ''} />
             </SpritePaper>
           </Grid>
-          <Grid container item xs={5} justify="center">
+          <Grid container item xs={5} justifyContent="center">
             <SpritePaper>
               <Image src={sprites?.sprites.back_shiny_female ?? ''} />
             </SpritePaper>
@@ -58,12 +58,12 @@ export const SpriteGrid: React.FC<Props> = (props) => {
       <Grid item xs={2}>
         {<GenderIcon femaleRate={femaleRate} hasGenderDiff={hasGenderDiff} />}
       </Grid>
-      <Grid container item xs={5} justify="center">
+      <Grid container item xs={5} justifyContent="center">
         <SpritePaper>
           <Image src={sprites?.sprites.front_default ?? ''} />
         </SpritePaper>
       </Grid>
-      <Grid container item xs={5} justify="center">
+      <Grid container item xs={5} justifyContent="center">
         <SpritePaper>
           <Image src={sprites?.sprites.back_default ?? ''} />
         </SpritePaper>
@@ -73,12 +73,12 @@ export const SpriteGrid: React.FC<Props> = (props) => {
           <Grid item xs={2}>
             {<GenderIcon femaleRate={8} hasGenderDiff={hasGenderDiff} />}
           </Grid>
-          <Grid container item xs={5} justify="center">
+          <Grid container item xs={5} justifyContent="center">
             <SpritePaper>
               <Image src={sprites?.sprites.front_female ?? ''} />
             </SpritePaper>
           </Grid>
-          <Grid container item xs={5} justify="center">
+          <Grid container item xs={5} justifyContent="center">
             <SpritePaper>
               <Image src={sprites?.sprites.back_female ?? ''} />
             </SpritePaper>

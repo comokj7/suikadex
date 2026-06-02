@@ -1,11 +1,11 @@
 import React from 'react';
-import { ThemeProvider, useTheme } from '@material-ui/core';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { ApiProvider, LocaleProvider } from './providers';
 import { Router } from './router';
 
 export const App: React.FC = () => {
-  const theme = useTheme();
+  const theme = createTheme();
 
   return (
     <ThemeProvider theme={theme}>

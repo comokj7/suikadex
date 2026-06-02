@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { Types } from '../../../enums';
-import { Chip, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Chip } from '@mui/material';
 import styled from '@emotion/styled';
 
 type Prop = {
@@ -17,7 +18,7 @@ export const TypeChip: React.FC<Prop> = (props) => {
   const { typeId, typeName } = props;
   const type = Types.find((item) => item.typeId === typeId);
 
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       primary: {
         main: type?.backgroundColor ?? '',

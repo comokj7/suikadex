@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { ReactNode, useContext, useState } from 'react';
 import { Locales } from '../enums';
 
 type ContextValue = {
@@ -13,7 +13,11 @@ const LocaleContext = React.createContext<ContextValue>({
   },
 });
 
-export const LocaleProvider: React.FC = ({ children }) => {
+interface Props {
+  children: ReactNode;
+}
+
+export const LocaleProvider: React.FC<Props> = ({ children }) => {
   const [locale, setLocale] = useState<Locales>(Locales.KOREAN);
 
   const value = {

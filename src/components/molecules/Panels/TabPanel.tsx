@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 
 type Props = {
   children: ReactNode;

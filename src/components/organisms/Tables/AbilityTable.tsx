@@ -7,7 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 import { filterLocaleName } from '../../../utils/convertUtil';
 import { useLocale } from '../../../providers/LocaleProvider';
 import {

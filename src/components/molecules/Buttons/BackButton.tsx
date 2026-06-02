@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, IconButtonProps } from '@material-ui/core';
+import { IconButton, IconButtonProps } from '@mui/material';
 import { ChevronLeft } from 'mdi-material-ui';
 import styled from '@emotion/styled';
 

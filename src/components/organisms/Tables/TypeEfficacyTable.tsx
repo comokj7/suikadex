@@ -6,7 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { Efficacy } from '../../../interfaces';
 import { DamageFactors } from '../../../enums';

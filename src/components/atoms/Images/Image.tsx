@@ -1,13 +1,29 @@
-import React from 'react';
-import { CircularProgress } from '@material-ui/core';
-import MaterialImage from 'material-ui-image';
+// src/components/atoms/Images/Image.tsx
+import React, { useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
 
-type Props = {
-  src?: string;
-};
+interface ImageProps {
+  src: string;
+  alt?: string;
+}
 
-export const Image: React.FC<Props> = (props) => {
-  const { src = '' } = props;
+export const Image: React.FC<ImageProps> = ({ src, alt = 'pokemon' }) => {
+  const [loading, setLoading] = useState(true);
 
-  return <MaterialImage src={src} loading={<CircularProgress />} />;
+  return (
+    <Box position="relative" display="inline-flex" justifyContent="center" alignItems="center">
+      {loading && (
+        <Box position="absolute">
+          <CircularProgress size={30} />
+        </Box>
+      )}
+      <Box
+        component="img"
+        src={src}
+        alt={alt}
+        onLoad={() => setLoading(false)}
+        sx={{ opacity: loading ? 0 : 1, transition: 'opacity 0.3s' }}
+      />
+    </Box>
+  );
 };

@@ -10,8 +10,11 @@ import {
   MenuItem,
   Select,
   Typography,
-} from '@material-ui/core';
-import SearchBar from 'material-ui-search-bar';
+  TextField,
+  InputAdornment,
+  SelectChangeEvent
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { ContentContainer, Image, ScreenContainer } from '../components/atoms';
@@ -27,7 +30,7 @@ const FilterGrid = styled(Grid)`
   margin-bottom: 20px;
 `;
 
-const StyledSearchBar = styled(SearchBar)`
+const StyledSearchBar = styled(TextField)`
   height: 100%;
 `;
 
@@ -106,19 +109,15 @@ export const PokemonList: React.FC = () => {
     history.push(`/pokemon/${no}`);
   };
 
-  const handleChangeKeyword = (value: string) => {
-    debounce(value);
+  const handleChangeKeyword = (event: ChangeEvent<HTMLInputElement>) => {
+    debounce(event.target.value);
   };
 
-  const handleClearKeyword = () => {
-    setKeyword(undefined);
-  };
-
-  const handleChangeType1 = (event: ChangeEvent<{ value: unknown }>) => {
+  const handleChangeType1 = (event: SelectChangeEvent<{ value: unknown }>) => {
     setType1(Number(event.target.value));
   };
 
-  const handleChangeType2 = (event: ChangeEvent<{ value: unknown }>) => {
+  const handleChangeType2 = (event: SelectChangeEvent<{ value: unknown }>) => {
     setType2(Number(event.target.value));
   };
 
@@ -134,8 +133,16 @@ export const PokemonList: React.FC = () => {
           <StyledSearchBar
             value={keyword}
             placeholder="전국도감 번호 or 이름"
+            variant="outlined"
+            fullWidth
             onChange={handleChangeKeyword}
-            onCancelSearch={handleClearKeyword}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
           />
           <SelectFormControl variant="filled">
             <InputLabel id="label-type-1">속성1</InputLabel>
@@ -143,7 +150,7 @@ export const PokemonList: React.FC = () => {
               id="select-type-1"
               labelId="label-type-1"
               displayEmpty
-              value={type1}
+              value={{value: type1}}
               onChange={handleChangeType1}>
               <MenuItem value={0}>전체</MenuItem>
               {filteredTypeList?.map((type) => (
@@ -159,7 +166,7 @@ export const PokemonList: React.FC = () => {
               id="select-type-2"
               labelId="select-type-2"
               displayEmpty
-              value={type2}
+              value={{value: type2}}
               onChange={handleChangeType2}>
               <MenuItem value={0}>전체</MenuItem>
               {filteredTypeList?.map((type) => (
@@ -180,7 +187,7 @@ export const PokemonList: React.FC = () => {
                 key={pokemon?.id}
                 onClick={() => goPokemonDetail(pokemon.id)}>
                 <Grid container item xs={12}>
-                  <Grid container item xs={2} justify="center">
+                  <Grid container item xs={2} justifyContent="center">
                     <ImageContainer>
                       <Image
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon?.id}.png`}
